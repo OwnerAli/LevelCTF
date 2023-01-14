@@ -21,10 +21,6 @@ public class ArenaRegistry {
         if (isRegisteredArena(arenaId)) return false;
 
         Arena arena = new Arena(arenaId);
-        arena.getTeamList().add(new Team(ChatColor.BLUE));
-        arena.getTeamList().add(new Team(ChatColor.RED));
-        arena.getTeamList().add(new Team(ChatColor.YELLOW));
-        arena.getTeamList().add(new Team(ChatColor.GREEN));
         arenaMap.put(arenaId, arena);
         return true;
     }

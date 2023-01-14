@@ -2,14 +2,15 @@ package me.ogali.levelctf.utils;
 
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.Getter;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
@@ -107,6 +108,13 @@ public class ItemBuilder {
             setItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         }
         meta.setUnbreakable(true);
+        return this;
+    }
+
+    public ItemBuilder setLeatherArmorColor(Color color) {
+        if (meta instanceof LeatherArmorMeta leatherArmorMeta) {
+            leatherArmorMeta.setColor(color);
+        }
         return this;
     }
 

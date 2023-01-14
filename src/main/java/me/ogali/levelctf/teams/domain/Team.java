@@ -1,14 +1,29 @@
 package me.ogali.levelctf.teams.domain;
 
 import lombok.Data;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Data
 public class Team {
 
+    private final List<UUID> teamMembersList;
     private final ChatColor teamColor;
     private Location spawnLocation;
+
+    public Team(ChatColor teamColor) {
+        this.teamMembersList = new ArrayList<>();
+        this.teamColor = teamColor;
+    }
+
+    public void teleportTeamMembersToSpawn() {
+        teamMembersList.forEach(uuid -> Bukkit.getPlayer(uuid).teleport(spawnLocation));
+    }
 
     @Override
     public String toString() {

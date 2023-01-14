@@ -1,31 +1,33 @@
 package me.ogali.levelctf.actionitems.domain;
 
 import de.tr7zw.nbtapi.NBTItem;
-import lombok.Data;
+import lombok.Getter;
+import me.ogali.levelctf.LevelCTF;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.function.Consumer;
 
-@Data
+@Getter
 public class ActionItem {
 
-    private final ItemStack item;
-    private final Consumer<PlayerInteractEvent> playerInteractEventConsumer;
     private final NBTItem nbtItem;
+    protected final String id;
+    private final Consumer<PlayerInteractEvent> interactEventConsumer;
 
-    public ActionItem(ItemStack item, Consumer<PlayerInteractEvent> playerInteractEventConsumer) {
-        this.item = item;
-        this.playerInteractEventConsumer = playerInteractEventConsumer;
-        this.nbtItem = new NBTItem(item);
+    public ActionItem(ItemStack itemStack, String id, Consumer<PlayerInteractEvent> interactEventConsumer) {
+        this.nbtItem = new NBTItem(itemStack);
+        this.nbtItem.setString("id", id);
+        this.id = id;
+        this.interactEventConsumer = interactEventConsumer;
     }
 
-    public void setId(String id) {
-        nbtItem.setString("id", id);
+    public void accept(PlayerInteractEvent playerInteractEvent) {
+        interactEventConsumer.accept(playerInteractEvent);
     }
 
-    public ItemStack getItem() {
-        return nbtItem.getItem();
+    public void register() {
+        LevelCTF.getInstance().getItemRegistry().registerItem(this);
     }
 
 }

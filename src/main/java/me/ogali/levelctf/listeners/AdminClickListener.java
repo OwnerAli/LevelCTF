@@ -1,7 +1,5 @@
 package me.ogali.levelctf.listeners;
 
-import de.tr7zw.nbtapi.NBT;
-import de.tr7zw.nbtapi.NBTItem;
 import lombok.RequiredArgsConstructor;
 import me.ogali.levelctf.LevelCTF;
 import org.bukkit.Material;
@@ -18,8 +16,8 @@ public class AdminClickListener implements Listener {
     public void onClick(PlayerInteractEvent event) {
         if (event.getItem() == null || event.getItem().getType() == Material.AIR) return;
         if (main.getEditPlayerRegistry().getEditPlayer(event.getPlayer()).isEmpty()) return;
-        main.getItemRegistry().getSpecialItem(NBT.get(event.getPlayer().getInventory().getItemInMainHand(),
-                nbt -> nbt.getString("id"))).getPlayerInteractEventConsumer().accept(event);
+        main.getItemRegistry().getActionItem(event.getItem())
+                .ifPresent(actionItem -> actionItem.accept(event));
     }
 
 }

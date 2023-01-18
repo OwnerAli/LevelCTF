@@ -2,6 +2,7 @@ package me.ogali.levelctf.items;
 
 import me.ogali.levelctf.actionitems.domain.ActionItem;
 import me.ogali.levelctf.players.domain.EditPlayer;
+import me.ogali.levelctf.utils.Chat;
 import me.ogali.levelctf.utils.ItemBuilder;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -26,6 +27,12 @@ public class SpawnPointSetterEditItem extends ActionItem {
                     event.setCancelled(true);
 
                     if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
+                        if (editPlayer.getEditingArena().getTeamList().isEmpty()) {
+                            Chat.sendActionBarWithSound(event.getPlayer(), "&cNO TEAMS FOUND!");
+                            event.getPlayer().playSound(event.getPlayer(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5, 1);
+                            return;
+                        }
+
                         Inventory inventory = event.getPlayer().getInventory();
 
                         List<ItemStack> teamSelectionItemList = new ArrayList<>();
@@ -39,10 +46,8 @@ public class SpawnPointSetterEditItem extends ActionItem {
                     }
                     if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
                         editPlayer.getTeamSelection().setSpawnLocation(event.getClickedBlock().getLocation());
-                        event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                                new TextComponent(editPlayer.getTeamSelection().getTeamColor() + "SET "
-                                        + editPlayer.getTeamSelection().toString() + " TEAM'S SPAWN POINT"));
-                        event.getPlayer().playSound(event.getPlayer(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5, 5);
+                        Chat.sendActionBarWithSound(event.getPlayer(), editPlayer.getTeamSelection().getTeamColor() + "SET "
+                                + editPlayer.getTeamSelection().toString() + " TEAM'S SPAWN POINT");
                     }
                 });
         register();

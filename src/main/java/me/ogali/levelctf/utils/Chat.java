@@ -1,8 +1,12 @@
 package me.ogali.levelctf.utils;
 
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,16 @@ public class Chat {
 
     public static void tell(CommandSender toWhom, String message) {
         toWhom.sendMessage(colorize(message));
+    }
+
+    public static void sendActionBarWithSound(Player toWhom, String message) {
+        toWhom.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(colorize(message)));
+        toWhom.playSound(toWhom, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5, 5);
+    }
+
+    public static void sendActionBarWithSound(Player toWhom, String message, int volume, int pitch) {
+        toWhom.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(colorize(message)));
+        toWhom.playSound(toWhom, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, volume, pitch);
     }
 
     public static String colorize(String message) {

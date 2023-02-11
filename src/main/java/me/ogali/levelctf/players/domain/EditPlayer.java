@@ -1,9 +1,9 @@
 package me.ogali.levelctf.players.domain;
 
 import lombok.Data;
+import me.ogali.levelctf.LevelCTF;
 import me.ogali.levelctf.arenas.domain.Arena;
-import me.ogali.levelctf.items.SpawnPointSetterEditItem;
-import me.ogali.levelctf.items.TeamCreationItem;
+import me.ogali.levelctf.items.*;
 import me.ogali.levelctf.teams.domain.Team;
 import me.ogali.levelctf.utils.Chat;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -11,6 +11,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 @Data
 public class EditPlayer {
@@ -20,37 +21,34 @@ public class EditPlayer {
     private Team teamSelection;
     private final SpawnPointSetterEditItem spawnPointSetterEditItem = new SpawnPointSetterEditItem(this);
 
-    private Inventory originalInventory;
+    private ItemStack[] originalInventoryContents;
     private boolean editMode;
 
     public EditPlayer(Player player, Arena editingArena) {
         this.player = player;
         this.editingArena = editingArena;
-        this.originalInventory = player.getInventory();
+        this.originalInventoryContents = player.getInventory().getContents();
         this.teamSelection = new Team(ChatColor.BLUE);
     }
 
-    public void toggleEditMode() {
-        if (editMode) {
-            disableEditMode();
-            return;
-        }
-        enableEditMode();
-    }
-
-    private void enableEditMode() {
+    public void enableEditMode() {
         editMode = true;
         giveItemLoadOut();
     }
 
-    private void disableEditMode() {
+    public void disableEditMode() {
         editMode = false;
+        player.getInventory().setContents(originalInventoryContents);
+        LevelCTF.getInstance().getEditPlayerRegistry().removeEditPlayer(this);
     }
 
     public void giveItemLoadOut() {
         Inventory inventory = player.getInventory();
         inventory.setItem(0, spawnPointSetterEditItem.getNbtItem().getItem());
         inventory.setItem(1, new TeamCreationItem(this).getNbtItem().getItem());
+        inventory.setItem(2, new SetLootTableItem(this).getNbtItem().getItem());
+        inventory.setItem(3, new ContainerAddItem(this).getNbtItem().getItem());
+        inventory.setItem(8, new SaveEditsItem(this).getNbtItem().getItem());
     }
 
     public void sendClickableTeamSelectionMessage() {

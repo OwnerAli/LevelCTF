@@ -7,7 +7,7 @@ import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import lombok.RequiredArgsConstructor;
 import me.ogali.levelctf.LevelCTF;
-import me.ogali.levelctf.arenas.domain.Arena;
+import me.ogali.levelctf.games.domain.Game;
 import me.ogali.levelctf.players.domain.EditPlayer;
 import me.ogali.levelctf.teams.domain.Team;
 import me.ogali.levelctf.utils.Chat;
@@ -41,7 +41,7 @@ public class AdminCommands extends BaseCommand {
             return;
         }
         EditPlayer editPlayer = new EditPlayer(player, main.getArenaRegistry().getArenaById(arenaId));
-        editPlayer.toggleEditMode();
+        editPlayer.enableEditMode();
         main.getEditPlayerRegistry().addEditPlayer(editPlayer);
     }
 
@@ -56,9 +56,7 @@ public class AdminCommands extends BaseCommand {
     @Subcommand("game start")
     @Syntax("<arena id>")
     public void onGameStart(Player player, String arenaId) {
-        Arena arena = main.getArenaRegistry().getArenaById(arenaId);
-        arena.getTeamList().get(0).getTeamMembersList().add(player.getUniqueId());
-        arena.getTeamList().forEach(Team::teleportTeamMembersToSpawn);
+        new Game(main.getArenaRegistry().getArenaById(arenaId), 3).start(player);
     }
 
 }

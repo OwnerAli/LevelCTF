@@ -15,6 +15,10 @@ public class EditPlayerRegistry {
         adminPlayerSet.add(editPlayer);
     }
 
+    public void removeEditPlayer(EditPlayer editPlayer) {
+        adminPlayerSet.remove(editPlayer);
+    }
+
     public Optional<EditPlayer> getEditPlayer(Player player) {
         return adminPlayerSet.stream()
                 .filter(adminPlayer -> adminPlayer.getPlayer().equals(player))

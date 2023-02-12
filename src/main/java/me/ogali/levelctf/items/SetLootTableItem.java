@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class SetLootTableItem extends ActionItem {
 
@@ -29,15 +30,14 @@ public class SetLootTableItem extends ActionItem {
                     if (!(click.getClickedBlock().getState() instanceof TileState tileState)) return;
                     if (!(tileState instanceof Container container)) return;
                     if (container.getInventory().isEmpty()) return;
-                    List<Loot<ItemStack>> containerLootList = Arrays.stream(container.getInventory().getContents())
-                            .filter(itemStack -> {
-                                if (itemStack == null) return false;
-                                return itemStack.getType() != Material.AIR;
-                            })
-                            .map(itemStack -> new Loot<>(itemStack, 100.0))
-                            .toList();
+                    List<Loot<ItemStack>> containerLootList =
+                            Arrays.stream(container.getInventory().getContents())
+                                    .filter(Objects::nonNull)
+                                    .filter(itemStack -> itemStack.getType() != Material.AIR)
+                                    .map(itemStack -> new Loot<>(itemStack, 100.0))
+                                    .toList();
                     editPlayer.getEditingArena().getLootTable().addAll(containerLootList);
-                    new LootTableEditMenu().show(editPlayer.getPlayer(), editPlayer.getEditingArena());
+                    new LootTableEditMenu().show(editPlayer, editPlayer.getEditingArena());
                 });
         register();
     }

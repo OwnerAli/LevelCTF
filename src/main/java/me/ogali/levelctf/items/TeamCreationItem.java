@@ -11,7 +11,7 @@ public class TeamCreationItem extends ActionItem {
 
     public TeamCreationItem(EditPlayer editPlayer) {
         super(new ItemBuilder(Material.LEATHER_HELMET)
-                        .setName("&f&lTEAM CREATOR")
+                        .setName("&f&lTeam Creation Tool")
                         .setLeatherArmorColor(Color.SILVER)
                         .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DYE)
                         .build(), "teamCreationItem",

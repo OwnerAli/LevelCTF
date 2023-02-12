@@ -1,6 +1,9 @@
 package me.ogali.levelctf.floors.domain;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import me.ogali.levelctf.containers.domain.LootContainer;
 import me.ogali.levelctf.LevelCTF;
 import me.ogali.levelctf.containers.WeightedRandomSelector;
 import me.ogali.levelctf.containers.domain.Loot;

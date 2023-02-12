@@ -4,27 +4,29 @@ import me.ogali.levelctf.arenas.domain.Arena;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ArenaRegistry {
 
     private final Map<String, Arena> arenaMap = new HashMap<>();
 
     /**
-     *
-     * @param arenaId a unique id to identify each arena
-     * @return true if there is no arena with specified id, otherwise false
-     *
+     * @param arena the arena to be registered
+     * @return true if the arena was successfully created,
+     * false if an arena of the same id is already present.
      */
-    public boolean registerArena(String arenaId) {
-        if (isRegisteredArena(arenaId)) return false;
-
-        Arena arena = new Arena(arenaId);
-        arenaMap.put(arenaId, arena);
+    public boolean registerArena(Arena arena) {
+        if (arenaMap.get(arena.getArenaId()) != null) return false;
+        arenaMap.put(arena.getArenaId(), arena);
         return true;
     }
 
-    public Arena getArenaById(String arenaId) {
-        return arenaMap.get(arenaId);
+    /**
+     * @param arenaId a unique id to identify each arena
+     * @return An optional of either null or the arena object
+     */
+    public Optional<Arena> getArenaById(String arenaId) {
+        return Optional.ofNullable(arenaMap.get(arenaId));
     }
 
     /**

@@ -1,7 +1,10 @@
 package me.ogali.levelctf.commands;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.Syntax;
 import lombok.RequiredArgsConstructor;
 import me.ogali.levelctf.LevelCTF;
 import me.ogali.levelctf.arenas.domain.Arena;
@@ -22,14 +25,16 @@ public class AdminCommands extends BaseCommand {
     private final LevelCTF main;
 
     @Subcommand("arena create")
-    @Syntax("<arena id> <min amount of floors> <max amount of floors> <number of teams> number of floors>")
+    @Syntax("<arena id> <min amount of players> <max amount of players> <number of teams> <number of floors>")
     public void onArenaCreate(Player player, String arenaId, int minAmountOfPlayers, int maxAmountOfPlayers, int numberOfTeams, int numberOfFloors) {
-        if (main.getArenaRegistry().registerArena(new Arena(arenaId, minAmountOfPlayers, maxAmountOfPlayers, numberOfTeams, numberOfFloors))) {
-            Chat.tell(player, "&aSuccessfully created arena with id: " + arenaId +
-                    "\n&7* To edit your arena, execute command /arena edit <arena id>");
+        if (main.getArenaRegistry().isRegisteredArena(arenaId)) {
+            Chat.tell(player, "&cThere is already an arena with that name!");
             return;
         }
-        Chat.tell(player, "&cThere is already an arena with that name!");
+        main.getArenaRegistry().registerArena(new Arena(arenaId, minAmountOfPlayers,
+                maxAmountOfPlayers, numberOfTeams, numberOfFloors));
+        Chat.tell(player, "&aSuccessfully created arena with id: " + arenaId +
+                "\n&7* To edit your arena, execute command /arena edit <arena id>");
     }
 
     @Subcommand("arena edit")
@@ -63,7 +68,9 @@ public class AdminCommands extends BaseCommand {
     @Subcommand("game start")
     @Syntax("<arena id>")
     public void onGameStart(Player player, String arenaId) {
-        new Game(main.getArenaRegistry().getArenaById(arenaId), 3).start(player);
+        main.getArenaRegistry().getArenaById(arenaId)
+                .ifPresentOrElse(arena -> new Game(arena, 3).start(player),
+                        () -> Chat.tell(player, "&cThere is no arena with id: " + arenaId));
     }
 
 }

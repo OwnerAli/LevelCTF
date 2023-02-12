@@ -5,6 +5,7 @@ import co.aikar.commands.MessageType;
 import lombok.Getter;
 import me.ogali.levelctf.commands.AdminCommands;
 import me.ogali.levelctf.listeners.AdminClickListener;
+import me.ogali.levelctf.prompts.listeners.ChatPromptListener;
 import me.ogali.levelctf.registries.EditPlayerRegistry;
 import me.ogali.levelctf.registries.ArenaRegistry;
 import me.ogali.levelctf.registries.ItemRegistry;
@@ -59,6 +60,7 @@ public final class LevelCTF extends JavaPlugin {
 
     private void initializeListeners() {
         getServer().getPluginManager().registerEvents(new AdminClickListener(this), this);
+        getServer().getPluginManager().registerEvents(new ChatPromptListener(), this);
     }
 
 }

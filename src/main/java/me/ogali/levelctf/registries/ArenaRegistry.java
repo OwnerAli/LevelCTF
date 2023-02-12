@@ -12,13 +12,9 @@ public class ArenaRegistry {
 
     /**
      * @param arena the arena to be registered
-     * @return true if the arena was successfully created,
-     * false if an arena of the same id is already present.
      */
-    public boolean registerArena(Arena arena) {
-        if (arenaMap.get(arena.getArenaId()) != null) return false;
+    public void registerArena(Arena arena) {
         arenaMap.put(arena.getArenaId(), arena);
-        return true;
     }
 
     /**

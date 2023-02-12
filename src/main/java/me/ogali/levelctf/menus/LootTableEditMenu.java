@@ -5,7 +5,7 @@ import me.despical.inventoryframework.GuiItem;
 import me.despical.inventoryframework.pane.PaginatedPane;
 import me.ogali.levelctf.LevelCTF;
 import me.ogali.levelctf.arenas.domain.Arena;
-import me.ogali.levelctf.containers.domain.Loot;
+import me.ogali.levelctf.menus.items.LootEditItem;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -21,9 +21,16 @@ public class LootTableEditMenu {
         List<GuiItem> guiItemList = new ArrayList<>();
         arena.getLootTable()
                 .stream()
-                .filter(itemStackLoot -> itemStackLoot.getElement().getType() != Material.AIR)
-                .map(Loot::getElement)
-                .forEach(itemStack -> guiItemList.add(new GuiItem(itemStack, click -> click.setCancelled(true))));
+                .filter(itemStackLoot -> itemStackLoot.element().getType() != Material.AIR)
+                .forEach(loot -> guiItemList.add(new LootEditItem(loot.element().clone(),
+                        click -> {
+                            click.setCancelled(true);
+                            if (click.isLeftClick()) {
+                                new LootSettingsMenu().show(player, arena, loot);
+                            } else if (click.isRightClick()) {
+                                arena.getLootTable().remove(loot);
+                            }
+                        })));
         paginatedPane.populateWithGuiItems(guiItemList);
 
         gui.addPane(paginatedPane);

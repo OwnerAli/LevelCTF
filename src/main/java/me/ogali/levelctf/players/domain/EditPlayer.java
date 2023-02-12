@@ -6,18 +6,12 @@ import me.ogali.levelctf.arenas.domain.Arena;
 import me.ogali.levelctf.floors.domain.Floor;
 import me.ogali.levelctf.items.FloorSpawnPointItem;
 import me.ogali.levelctf.items.SpawnPointSetterEditItem;
-import me.ogali.levelctf.items.TeamCreationItem;
 import me.ogali.levelctf.items.*;
 import me.ogali.levelctf.teams.domain.Team;
-import me.ogali.levelctf.utils.Chat;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.List;
 
 @Data
 public class EditPlayer {

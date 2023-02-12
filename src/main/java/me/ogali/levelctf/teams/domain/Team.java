@@ -31,6 +31,10 @@ public class Team {
         });
     }
 
+    public String toStringColored() {
+        return teamColor + teamColor.name().toUpperCase();
+    }
+
     @Override
     public String toString() {
         return teamColor.name().toUpperCase();

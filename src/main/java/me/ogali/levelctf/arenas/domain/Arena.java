@@ -1,9 +1,12 @@
 package me.ogali.levelctf.arenas.domain;
 
 import lombok.Data;
+import me.ogali.levelctf.containers.domain.Loot;
 import me.ogali.levelctf.floors.domain.Floor;
 import me.ogali.levelctf.teams.domain.Team;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +19,7 @@ public class Arena {
     private final int maxAmountOfPlayers;
     private List<Team> teamList;
     private List<Floor> floorList;
+    private final List<Loot<ItemStack>> lootTable;
 
     public Arena(String arenaId, int minAmountOfPlayers, int maxAmountOfPlayers, int numberOfTeams, int numberOfFloors) {
         this.arenaId = arenaId;
@@ -34,6 +38,13 @@ public class Arena {
         for (int i = 0; i < numberOfTeams; i++) {
             teamList.add(new Team(teamColorList[i]));
         }
+        this.lootTable = new ArrayList<>();
+    }
+
+    public void initializeGame(Player player) {
+        floorList.forEach(floor -> floor.initializeContainers(lootTable));
+        teamList.get(0).getTeamMembersList().add(player.getUniqueId());
+        teamList.forEach(Team::teleportTeamMembersToSpawn);
     }
 
 }

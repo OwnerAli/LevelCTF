@@ -1,7 +1,7 @@
 name: LevelCTF
 version: '${project.version}'
 main: me.ogali.levelctf.LevelCTF
-api-version: 1.19
+api-version: 1.18
 authors: [ OG_Ali ]
 depend: [NBTAPI]
 description: A new take on the classic CTF minigame.

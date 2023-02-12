@@ -1,11 +1,13 @@
 package me.ogali.levelctf.containers.domain;
 
-import lombok.AllArgsConstructor;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.block.Container;
 
-@AllArgsConstructor
 public class LootContainer {
 
-    private final WeightedRandomBag<ItemStack> lootTable;
+    private final Container container;
+
+    public LootContainer(Container container) {
+        this.container = container;
+    }
 
 }

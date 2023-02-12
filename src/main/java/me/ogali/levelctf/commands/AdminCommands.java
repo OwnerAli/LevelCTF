@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import me.ogali.levelctf.LevelCTF;
 import me.ogali.levelctf.arenas.domain.Arena;
 import me.ogali.levelctf.floors.domain.Floor;
+import me.ogali.levelctf.games.domain.Game;
 import me.ogali.levelctf.players.domain.EditPlayer;
 import me.ogali.levelctf.teams.domain.Team;
 import me.ogali.levelctf.utils.Chat;
@@ -62,6 +63,7 @@ public class AdminCommands extends BaseCommand {
     @Subcommand("game start")
     @Syntax("<arena id>")
     public void onGameStart(Player player, String arenaId) {
+        new Game(main.getArenaRegistry().getArenaById(arenaId), 3).start(player);
     }
 
 }

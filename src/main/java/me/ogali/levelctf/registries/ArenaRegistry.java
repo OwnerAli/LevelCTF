@@ -1,8 +1,6 @@
 package me.ogali.levelctf.registries;
 
 import me.ogali.levelctf.arenas.domain.Arena;
-import me.ogali.levelctf.teams.domain.Team;
-import org.bukkit.ChatColor;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -11,6 +11,8 @@ import me.ogali.levelctf.registries.ItemRegistry;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Random;
+
 public final class LevelCTF extends JavaPlugin {
 
     @Getter
@@ -21,10 +23,13 @@ public final class LevelCTF extends JavaPlugin {
     private EditPlayerRegistry editPlayerRegistry;
     @Getter
     private ItemRegistry itemRegistry;
+    @Getter
+    private Random random;
 
     @Override
     public void onEnable() {
         instance = this;
+        random = new Random();
         initializePlugin();
     }
 

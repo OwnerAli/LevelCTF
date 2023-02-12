@@ -1,12 +1,10 @@
 package me.ogali.levelctf.floors.domain;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import me.ogali.levelctf.containers.domain.LootContainer;
 import me.ogali.levelctf.LevelCTF;
-import me.ogali.levelctf.containers.WeightedRandomSelector;
 import me.ogali.levelctf.containers.domain.Loot;
+import me.ogali.levelctf.containers.domain.WeightedRandomSelector;
 import org.bukkit.Location;
 import org.bukkit.block.Container;
 import org.bukkit.inventory.ItemStack;
@@ -16,9 +14,10 @@ import java.util.List;
 import java.util.Random;
 
 @Getter
+@Setter
 public class Floor {
 
-    private final Location spawnLocation;
+    private Location spawnLocation;
     private final List<Container> containerList;
 
     public Floor(Location spawnLocation) {
@@ -33,7 +32,7 @@ public class Floor {
         containerList.forEach(container -> {
             int randomSlot = random.nextInt(container.getInventory().getSize());
             for (int i = 0; i < 5; i++) {
-                container.getInventory().setItem(randomSlot, weightedRandomSelector.getRandom());
+                container.getInventory().setItem(randomSlot, weightedRandomSelector.getRandomItem());
             }
         });
     }

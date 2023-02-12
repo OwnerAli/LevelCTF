@@ -11,7 +11,7 @@ public class ContainerAddItem extends ActionItem {
 
     public ContainerAddItem(EditPlayer editPlayer) {
         super(new ItemBuilder(Material.TRIPWIRE_HOOK)
-                        .setName("&b&lSet Container")
+                        .setName("&b&lAdd Container To Selected Floor")
                         .build(),
                 "containerAddItem",
                 event -> {
@@ -19,7 +19,7 @@ public class ContainerAddItem extends ActionItem {
                     if (!(event.getClickedBlock().getState() instanceof TileState tileState)) return;
                     if (!(tileState instanceof Container container)) return;
                     event.setCancelled(true);
-                    editPlayer.getEditingArena().getFloorList().get(0).getContainerList().add(container);
+                    editPlayer.getFloorSelection().getContainerList().add(container);
                 });
         register();
     }

@@ -6,7 +6,6 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -14,13 +13,11 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 @Getter
 public class ItemBuilder {
 
     private final ItemStack item;
-    private Consumer<PlayerInteractEvent> playerInteractEventConsumer;
     private final Material material;
     private int amount;
     private final ItemMeta meta;
@@ -41,12 +38,13 @@ public class ItemBuilder {
         meta = item.getItemMeta();
     }
 
-    public ItemBuilder(Material material, Consumer<PlayerInteractEvent> playerInteractEventConsumer) {
-        this.material = material;
-        amount = 1;
-        item = new ItemStack(this.material, amount);
-        meta = item.getItemMeta();
-        this.playerInteractEventConsumer = playerInteractEventConsumer;
+    public ItemBuilder(ItemStack item) {
+        this.item = item;
+        this.material = item.getType();
+        this.meta = item.getItemMeta();
+        if (item.getItemMeta() != null && item.getItemMeta().getLore() != null) {
+            lore.addAll(item.getItemMeta().getLore());
+        }
     }
 
     public ItemBuilder setName(String name) {

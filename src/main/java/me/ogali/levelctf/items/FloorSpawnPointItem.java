@@ -35,7 +35,8 @@ public class FloorSpawnPointItem extends ActionItem {
             } else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
                 if (event.getClickedBlock() == null) return;
                 editPlayer.getFloorSelection().setSpawnLocation(event.getClickedBlock().getLocation());
-                Chat.sendActionBarWithSound(event.getPlayer(), "&aFloor " + editPlayer.getEditingArena().getFloorList().indexOf(editPlayer.getFloorSelection())+1 +
+                Chat.sendActionBarWithSound(event.getPlayer(), "&aFloor " +
+                        (editPlayer.getEditingArena().getFloorList().indexOf(editPlayer.getFloorSelection()) + 1) +
                         " spawn point set!");
             }
         });

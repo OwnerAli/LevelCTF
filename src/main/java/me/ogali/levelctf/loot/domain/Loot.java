@@ -1,4 +1,4 @@
-package me.ogali.levelctf.containers.domain;
+package me.ogali.levelctf.loot.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

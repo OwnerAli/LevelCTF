@@ -1,7 +1,7 @@
 package me.ogali.levelctf.items;
 
 import me.ogali.levelctf.actionitems.domain.ActionItem;
-import me.ogali.levelctf.containers.domain.Loot;
+import me.ogali.levelctf.loot.domain.Loot;
 import me.ogali.levelctf.menus.LootTableEditMenu;
 import me.ogali.levelctf.players.domain.EditPlayer;
 import me.ogali.levelctf.utils.ItemBuilder;

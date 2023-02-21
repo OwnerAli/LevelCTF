@@ -64,7 +64,7 @@ public class EditPlayer {
     public void openLastMenu() {
         chatPromptOptional.ifPresent(chatPrompt -> {
             if (chatPrompt instanceof LootWeightPrompt lootWeightPrompt) {
-                new LootSettingsMenu().show(this, editingArena, lootWeightPrompt.getLoot());
+                new LootSettingsMenu().show(this, editingArena, lootWeightPrompt.loot());
             }
         });
     }

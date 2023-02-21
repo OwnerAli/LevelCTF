@@ -16,7 +16,7 @@ public class AdminClickListener implements Listener {
     public void onClick(PlayerInteractEvent event) {
         if (event.getItem() == null || event.getItem().getType() == Material.AIR) return;
         if (main.getEditPlayerRegistry().getEditPlayer(event.getPlayer()).isEmpty()) return;
-        main.getItemRegistry().getActionItem(event.getItem())
+        main.getItemRegistry().getActionItemByItemStack(event.getItem())
                 .ifPresent(actionItem -> actionItem.accept(event));
     }
 

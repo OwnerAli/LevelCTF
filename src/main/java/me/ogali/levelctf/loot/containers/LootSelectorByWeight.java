@@ -1,16 +1,17 @@
-package me.ogali.levelctf.containers.domain;
+package me.ogali.levelctf.loot.containers;
 
 import me.ogali.levelctf.LevelCTF;
+import me.ogali.levelctf.loot.domain.Loot;
 
 import java.util.List;
 import java.util.Random;
 
-public class WeightedRandomSelector<T> {
+public class LootSelectorByWeight<T> {
 
     private final List<Loot<T>> items;
     private final Random random;
 
-    public WeightedRandomSelector(List<Loot<T>> items) {
+    public LootSelectorByWeight(List<Loot<T>> items) {
         this.items = items;
         this.random = LevelCTF.getInstance().getRandom();
     }

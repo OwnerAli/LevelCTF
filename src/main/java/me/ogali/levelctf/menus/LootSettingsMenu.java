@@ -4,7 +4,7 @@ import me.despical.inventoryframework.Gui;
 import me.despical.inventoryframework.pane.StaticPane;
 import me.ogali.levelctf.LevelCTF;
 import me.ogali.levelctf.arenas.domain.Arena;
-import me.ogali.levelctf.containers.domain.Loot;
+import me.ogali.levelctf.loot.domain.Loot;
 import me.ogali.levelctf.menus.items.WeightChangeItem;
 import me.ogali.levelctf.menus.items.navigation.BackButton;
 import me.ogali.levelctf.players.domain.EditPlayer;

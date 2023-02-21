@@ -1,7 +1,7 @@
 package me.ogali.levelctf.arenas.domain;
 
 import lombok.Data;
-import me.ogali.levelctf.containers.domain.Loot;
+import me.ogali.levelctf.loot.domain.Loot;
 import me.ogali.levelctf.floors.domain.Floor;
 import me.ogali.levelctf.teams.domain.Team;
 import org.bukkit.ChatColor;
@@ -42,7 +42,7 @@ public class Arena {
     }
 
     public void initializeGame(Player player) {
-        floorList.forEach(floor -> floor.initializeContainers(lootTable));
+        floorList.forEach(floor -> floor.fillLootContainers(lootTable));
         teamList.get(0).getTeamMembersList().add(player.getUniqueId());
         teamList.forEach(Team::teleportTeamMembersToSpawn);
     }

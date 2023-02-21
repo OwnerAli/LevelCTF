@@ -14,10 +14,10 @@ public class ItemRegistry {
         actionItemsSet.add(actionItem);
     }
 
-    public Optional<ActionItem> getActionItem(ItemStack heldItem) {
+    public Optional<ActionItem> getActionItemByItemStack(ItemStack itemStack) {
         return actionItemsSet
                 .stream()
-                .filter(actionItem -> actionItem.getId().equals(NBT.get(heldItem,
+                .filter(actionItem -> actionItem.getId().equals(NBT.get(itemStack,
                         nbt -> nbt.getString("id"))))
                 .findFirst();
     }

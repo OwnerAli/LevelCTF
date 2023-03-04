@@ -7,9 +7,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.function.Consumer;
 
-public abstract class NavButton extends GuiItem {
+public abstract class NavigationButton extends GuiItem {
 
-    public NavButton(String displayName, Consumer<InventoryClickEvent> clickEventConsumer) {
+    public NavigationButton(String displayName, Consumer<InventoryClickEvent> clickEventConsumer) {
         super(new ItemBuilder(Material.ARROW)
                 .setName("&a&l" + displayName)
                 .build(), clickEventConsumer);

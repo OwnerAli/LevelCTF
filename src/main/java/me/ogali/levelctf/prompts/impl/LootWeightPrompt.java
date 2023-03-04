@@ -1,10 +1,9 @@
 package me.ogali.levelctf.prompts.impl;
 
-import lombok.Getter;
-import me.ogali.levelctf.containers.domain.Loot;
+import me.ogali.levelctf.loot.domain.Loot;
 import me.ogali.levelctf.prompts.domain.ChatPrompt;
 
-public record LootWeightPrompt(@Getter Loot<?> loot) implements ChatPrompt {
+public record LootWeightPrompt(Loot<?> loot) implements ChatPrompt {
 
     @Override
     public void setValue(String value) {

@@ -67,6 +67,7 @@ public class EditPlayer {
                 new LootSettingsMenu().show(this, editingArena, lootWeightPrompt.loot());
             }
         });
+        chatPromptOptional = Optional.empty();
     }
 
 }

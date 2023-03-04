@@ -1,6 +1,7 @@
 package me.ogali.levelctf.items;
 
 import me.ogali.levelctf.actionitems.domain.ActionItem;
+import me.ogali.levelctf.loot.containers.ItemStackLootContainer;
 import me.ogali.levelctf.players.domain.EditPlayer;
 import me.ogali.levelctf.utils.ItemBuilder;
 import org.bukkit.Material;
@@ -19,7 +20,7 @@ public class ContainerAddItem extends ActionItem {
                     if (!(event.getClickedBlock().getState() instanceof TileState tileState)) return;
                     if (!(tileState instanceof Container container)) return;
                     event.setCancelled(true);
-                    editPlayer.getFloorSelection().getContainerList().add(container);
+                    editPlayer.getFloorSelection().getContainerList().add(new ItemStackLootContainer(container));
                 });
         register();
     }

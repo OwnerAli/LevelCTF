@@ -5,8 +5,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 
-import java.util.Optional;
-
 public class ChatPromptListener implements Listener {
 
     @EventHandler
@@ -17,7 +15,6 @@ public class ChatPromptListener implements Listener {
                     event.setCancelled(true);
                     chatPrompt.setValue(event.getMessage());
                     editPlayer.openLastMenu();
-                    editPlayer.setChatPromptOptional(Optional.empty());
                 }));
     }
 

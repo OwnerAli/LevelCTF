@@ -3,5 +3,5 @@ version: '${project.version}'
 main: me.ogali.levelctf.LevelCTF
 api-version: 1.18
 authors: [ OG_Ali ]
-depend: [NBTAPI]
+depend: [NBTAPI, WorldEdit]
 description: A new take on the classic CTF minigame.

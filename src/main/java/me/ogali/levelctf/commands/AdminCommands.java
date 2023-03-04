@@ -5,6 +5,7 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
+import com.sk89q.worldedit.math.BlockVector3;
 import lombok.RequiredArgsConstructor;
 import me.ogali.levelctf.LevelCTF;
 import me.ogali.levelctf.arenas.domain.Arena;
@@ -13,9 +14,14 @@ import me.ogali.levelctf.games.domain.Game;
 import me.ogali.levelctf.players.domain.EditPlayer;
 import me.ogali.levelctf.teams.domain.Team;
 import me.ogali.levelctf.utils.Chat;
+import me.ogali.levelctf.worlds.WorldGenerator;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.io.File;
 
 @RequiredArgsConstructor
 @CommandAlias("lctfadmin")
@@ -71,6 +77,12 @@ public class AdminCommands extends BaseCommand {
         main.getArenaRegistry().getArenaById(arenaId)
                 .ifPresentOrElse(arena -> new Game(arena, 3).start(player),
                         () -> Chat.tell(player, "&cThere is no arena with id: " + arenaId));
+        WorldGenerator test = new WorldGenerator("test");
+        File file = new File(LevelCTF.getInstance().getDataFolder()
+                .getAbsolutePath() + "/map-schematics/test.schem");
+        World world = test.loadWorldWithSchematic(file,
+                BlockVector3.at(0, 0, 0));
+        player.teleport(new Location(world, 0, 0, 0));
     }
 
 }

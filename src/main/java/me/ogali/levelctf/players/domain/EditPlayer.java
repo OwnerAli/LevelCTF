@@ -12,6 +12,7 @@ import me.ogali.levelctf.prompts.domain.ChatPrompt;
 import me.ogali.levelctf.prompts.impl.LootWeightPrompt;
 import me.ogali.levelctf.teams.domain.Team;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -42,14 +43,15 @@ public class EditPlayer {
     }
 
     public void enableEditMode() {
-        editMode = true;
+        System.out.println(editingArena);
         giveItemLoadOut();
+        player.teleport(new Location(editingArena.getMapCreator().getWorld(), 0, 0, 0));
     }
 
     public void disableEditMode() {
-        editMode = false;
         player.getInventory().setContents(originalInventoryContents);
         LevelCTF.getInstance().getEditPlayerRegistry().removeEditPlayer(this);
+        LevelCTF.getInstance().getItemRegistry().clearEditPlayerItems(hashCode());
     }
 
     public void giveItemLoadOut() {
@@ -64,7 +66,7 @@ public class EditPlayer {
     public void openLastMenu() {
         chatPromptOptional.ifPresent(chatPrompt -> {
             if (chatPrompt instanceof LootWeightPrompt lootWeightPrompt) {
-                new LootSettingsMenu().show(this, editingArena, lootWeightPrompt.loot());
+                new LootSettingsMenu().show(this, lootWeightPrompt.loot());
             }
         });
         chatPromptOptional = Optional.empty();

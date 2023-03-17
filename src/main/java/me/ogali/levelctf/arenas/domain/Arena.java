@@ -1,10 +1,12 @@
 package me.ogali.levelctf.arenas.domain;
 
 import lombok.Data;
-import me.ogali.levelctf.loot.domain.Loot;
 import me.ogali.levelctf.floors.domain.Floor;
+import me.ogali.levelctf.loot.domain.Loot;
 import me.ogali.levelctf.teams.domain.Team;
+import me.ogali.levelctf.worlds.MapCreator;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,15 +16,18 @@ import java.util.List;
 @Data
 public class Arena {
 
-    private final String arenaId;
+    private final String id;
+    private final MapCreator mapCreator;
     private final int minAmountOfPlayers;
     private final int maxAmountOfPlayers;
     private List<Team> teamList;
     private List<Floor> floorList;
     private final List<Loot<ItemStack>> lootTable;
 
-    public Arena(String arenaId, int minAmountOfPlayers, int maxAmountOfPlayers, int numberOfTeams, int numberOfFloors) {
-        this.arenaId = arenaId;
+    public Arena(String id, String mapSchematicName, int minAmountOfPlayers, int maxAmountOfPlayers, int numberOfTeams, int numberOfFloors) {
+        this.id = id;
+        this.mapCreator = new MapCreator(mapSchematicName);
+        mapCreator.createNewMapInstance();
         this.minAmountOfPlayers = minAmountOfPlayers;
         this.maxAmountOfPlayers = maxAmountOfPlayers;
         this.teamList = new ArrayList<>();
@@ -41,8 +46,8 @@ public class Arena {
         this.lootTable = new ArrayList<>();
     }
 
-    public void initializeGame(Player player) {
-        floorList.forEach(floor -> floor.fillLootContainers(lootTable));
+    public void initializeGame(Player player, World newMapInstanceWorld) {
+        floorList.forEach(floor -> floor.fillLootContainers(newMapInstanceWorld));
         teamList.get(0).getTeamMembersList().add(player.getUniqueId());
         teamList.forEach(Team::teleportTeamMembersToSpawn);
     }

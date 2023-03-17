@@ -2,7 +2,7 @@ package me.ogali.levelctf.games.domain;
 
 import me.ogali.levelctf.arenas.domain.Arena;
 import me.ogali.levelctf.games.Startable;
-import me.ogali.levelctf.teams.domain.Team;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class Game implements Startable {
@@ -15,14 +15,10 @@ public class Game implements Startable {
         this.rounds = rounds;
     }
 
-    private void teleportPlayersToTeamSpawn() {
-        arena.getTeamList().forEach(Team::teleportTeamMembersToSpawn);
-    }
-
     @Override
     public void start(Player player) {
-        teleportPlayersToTeamSpawn();
-        arena.initializeGame(player);
+        World newMapInstanceWorld = arena.getMapCreator().createNewMapInstance();
+        arena.initializeGame(player, newMapInstanceWorld);
     }
 
 }

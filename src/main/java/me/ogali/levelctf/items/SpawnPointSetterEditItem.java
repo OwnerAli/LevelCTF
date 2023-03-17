@@ -19,7 +19,7 @@ public class SpawnPointSetterEditItem extends ActionItem {
                 .setName("&e&lSpawn Point Setting Tool")
                 .addLoreLines("&nRight-click &7to select which team", "you would like to set the",
                         "spawn point for.", "&nLeft-Click a block to set", "the teams spawn location.")
-                .build(), "spawnSetterItem");
+                .build(), editPlayer.hashCode() + ":spawnSetterItem");
         setInteractEventConsumer(event -> {
             event.setCancelled(true);
 

@@ -14,7 +14,7 @@ public class ArenaRegistry {
      * @param arena the arena to be registered
      */
     public void registerArena(Arena arena) {
-        arenaMap.put(arena.getArenaId(), arena);
+        arenaMap.put(arena.getId(), arena);
     }
 
     /**

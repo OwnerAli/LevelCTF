@@ -4,7 +4,9 @@ import de.tr7zw.nbtapi.NBT;
 import me.ogali.levelctf.actionitems.domain.ActionItem;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 public class ItemRegistry {
 
@@ -20,6 +22,16 @@ public class ItemRegistry {
                 .filter(actionItem -> actionItem.getId().equals(NBT.get(itemStack,
                         nbt -> nbt.getString("id"))))
                 .findFirst();
+    }
+
+    public void clearEditPlayerItems(int editPlayerHashCode) {
+        actionItemsSet
+                .forEach(actionItem -> {
+                    String[] splitItemId = actionItem.getId().split(":");
+
+                    if (Integer.parseInt(splitItemId[1]) != (editPlayerHashCode)) return;
+                    actionItemsSet.remove(actionItem);
+                });
     }
 
 }

@@ -5,7 +5,6 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
-import com.sk89q.worldedit.math.BlockVector3;
 import lombok.RequiredArgsConstructor;
 import me.ogali.levelctf.LevelCTF;
 import me.ogali.levelctf.arenas.domain.Arena;
@@ -14,33 +13,28 @@ import me.ogali.levelctf.games.domain.Game;
 import me.ogali.levelctf.players.domain.EditPlayer;
 import me.ogali.levelctf.teams.domain.Team;
 import me.ogali.levelctf.utils.Chat;
-import me.ogali.levelctf.worlds.WorldGenerator;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-
 @RequiredArgsConstructor
-@CommandAlias("lctfadmin")
+@CommandAlias("lctfadmin|lctfa")
 @CommandPermission("levelctf.admin")
 public class AdminCommands extends BaseCommand {
 
     private final LevelCTF main;
 
     @Subcommand("arena create")
-    @Syntax("<arena id> <min amount of players> <max amount of players> <number of teams> <number of floors>")
-    public void onArenaCreate(Player player, String arenaId, int minAmountOfPlayers, int maxAmountOfPlayers, int numberOfTeams, int numberOfFloors) {
+    @Syntax("<arena id> <map schematic name> <min amount of players> <max amount of players> <number of teams> <number of floors>")
+    public void onArenaCreate(Player player, String arenaId, String mapSchematicName, int minAmountOfPlayers, int maxAmountOfPlayers, int numberOfTeams, int numberOfFloors) {
         if (main.getArenaRegistry().isRegisteredArena(arenaId)) {
             Chat.tell(player, "&cThere is already an arena with that name!");
             return;
         }
-        main.getArenaRegistry().registerArena(new Arena(arenaId, minAmountOfPlayers,
+        main.getArenaRegistry().registerArena(new Arena(arenaId, mapSchematicName, minAmountOfPlayers,
                 maxAmountOfPlayers, numberOfTeams, numberOfFloors));
         Chat.tell(player, "&aSuccessfully created arena with id: " + arenaId +
-                "\n&7* To edit your arena, execute command /arena edit <arena id>");
+                "\n&7* To edit your arena, execute command /lctfa arena edit <arena id>");
     }
 
     @Subcommand("arena edit")
@@ -77,12 +71,6 @@ public class AdminCommands extends BaseCommand {
         main.getArenaRegistry().getArenaById(arenaId)
                 .ifPresentOrElse(arena -> new Game(arena, 3).start(player),
                         () -> Chat.tell(player, "&cThere is no arena with id: " + arenaId));
-        WorldGenerator test = new WorldGenerator("test");
-        File file = new File(LevelCTF.getInstance().getDataFolder()
-                .getAbsolutePath() + "/map-schematics/test.schem");
-        World world = test.loadWorldWithSchematic(file,
-                BlockVector3.at(0, 0, 0));
-        player.teleport(new Location(world, 0, 0, 0));
     }
 
 }

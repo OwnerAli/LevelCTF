@@ -14,27 +14,38 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
+import lombok.Getter;
+import me.ogali.levelctf.LevelCTF;
+import org.bukkit.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class WorldGenerator extends WorldCreator {
+public class MapCreator {
 
-    public WorldGenerator(String schematicName) {
-        super(schematicName + "World");
-        type(WorldType.FLAT);
-        generatorSettings("{\"layers\": [{\"block\": \"air\", \"height\": 100}], \"biome\":\"plains\"}");
-        generateStructures(false);
+    private final String schematicName;
+    @Getter
+    private org.bukkit.World world;
+    private int numberOfInstances;
+
+    public MapCreator(String schematicName) {
+        this.schematicName = schematicName;
     }
 
-    public org.bukkit.World loadWorldWithSchematic(File schematicFile, BlockVector3 blockVector3) {
+    public org.bukkit.World createNewMapInstance() {
+        org.bukkit.World world = new FlatWorldGenerator(schematicName + "World" + numberOfInstances++)
+                .createWorld();
+        if (world == null) throw new RuntimeException();
+        pasteSchematic(world);
+        return world;
+    }
+
+    public void pasteSchematic(org.bukkit.World world) {
+        File schematicFile = new File(LevelCTF.getInstance().getDataFolder()
+                .getAbsolutePath() + "/map-schematics/" + schematicName + ".schem");
+
         WorldEditPlugin worldEditPlugin = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
-        org.bukkit.World world = this.createWorld();
 
         world.getBlockAt(0, 0, 0).setType(Material.BEDROCK);
 
@@ -52,7 +63,7 @@ public class WorldGenerator extends WorldCreator {
                     -1)) {
 
                 Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
-                        .to(blockVector3).ignoreAirBlocks(true).build();
+                        .to(BlockVector3.at(0, 0, 0)).ignoreAirBlocks(true).build();
 
                 try {
                     Operations.complete(operation);
@@ -64,9 +75,9 @@ public class WorldGenerator extends WorldCreator {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return;
         }
-        return world;
+        this.world = world;
     }
 
 }

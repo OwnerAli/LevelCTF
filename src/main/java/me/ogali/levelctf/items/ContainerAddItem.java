@@ -1,8 +1,8 @@
 package me.ogali.levelctf.items;
 
 import me.ogali.levelctf.actionitems.domain.ActionItem;
-import me.ogali.levelctf.loot.containers.ItemStackLootContainer;
 import me.ogali.levelctf.players.domain.EditPlayer;
+import me.ogali.levelctf.utils.Chat;
 import me.ogali.levelctf.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.block.Container;
@@ -14,13 +14,19 @@ public class ContainerAddItem extends ActionItem {
         super(new ItemBuilder(Material.TRIPWIRE_HOOK)
                         .setName("&b&lAdd Container To Selected Floor")
                         .build(),
-                "containerAddItem",
+                editPlayer.hashCode() + ":containerAddItem",
                 event -> {
                     if (event.getClickedBlock() == null) return;
-                    if (!(event.getClickedBlock().getState() instanceof TileState tileState)) return;
-                    if (!(tileState instanceof Container container)) return;
+                    if (!(event.getClickedBlock().getState() instanceof TileState tileState)) {
+                        Chat.tell(editPlayer.getPlayer(), "&cThat isn't a container!");
+                        return;
+                    }
+                    if (!(tileState instanceof Container)) {
+                        Chat.tell(editPlayer.getPlayer(), "&cThat isn't a container!");
+                        return;
+                    }
                     event.setCancelled(true);
-                    editPlayer.getFloorSelection().getContainerList().add(new ItemStackLootContainer(container));
+                    editPlayer.getFloorSelection().getContainerLocationsList().add(event.getClickedBlock().getLocation());
                 });
         register();
     }

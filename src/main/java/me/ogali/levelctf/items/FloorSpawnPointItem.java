@@ -18,7 +18,7 @@ public class FloorSpawnPointItem extends ActionItem {
         super(new ItemBuilder(Material.FIREWORK_STAR)
                 .setName("&a&lFloor Spawn Point Tool")
                 .addLoreLines("&fRight-Click to select team", "&fLeft-Click block to set spawn point.")
-                .build(), "floorSpawnPointItem");
+                .build(), editPlayer.hashCode() + ":floorSpawnPointItem");
         setInteractEventConsumer(event -> {
             event.setCancelled(true);
 

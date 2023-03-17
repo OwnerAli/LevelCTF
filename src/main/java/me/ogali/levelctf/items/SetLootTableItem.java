@@ -23,7 +23,7 @@ public class SetLootTableItem extends ActionItem {
                                 "&ain it. The items in the", "&acontainer will become the new",
                                 "&aloot table for this arena.")
                         .build(),
-                "lootTableItem",
+                editPlayer.hashCode() + ":lootTableItem",
                 click -> {
                     click.setCancelled(true);
                     if (click.getClickedBlock() == null) return;
@@ -36,8 +36,8 @@ public class SetLootTableItem extends ActionItem {
                                     .filter(itemStack -> itemStack.getType() != Material.AIR)
                                     .map(itemStack -> new Loot<>(itemStack, 100.0))
                                     .toList();
-                    editPlayer.getEditingArena().getLootTable().addAll(containerLootList);
-                    new LootTableEditMenu().show(editPlayer, editPlayer.getEditingArena());
+                    editPlayer.getFloorSelection().getLootTable().addAll(containerLootList);
+                    new LootTableEditMenu().show(editPlayer);
                 });
         register();
     }

@@ -5,7 +5,6 @@ import me.despical.inventoryframework.GuiItem;
 import me.despical.inventoryframework.pane.PaginatedPane;
 import me.despical.inventoryframework.pane.StaticPane;
 import me.ogali.levelctf.LevelCTF;
-import me.ogali.levelctf.arenas.domain.Arena;
 import me.ogali.levelctf.menus.items.LootEditItem;
 import me.ogali.levelctf.menus.items.navigation.DoneButton;
 import me.ogali.levelctf.players.domain.EditPlayer;
@@ -17,23 +16,23 @@ import java.util.List;
 
 public class LootTableEditMenu {
 
-    public void show(EditPlayer editPlayer, Arena arena) {
-        Gui gui = new Gui(LevelCTF.getInstance(), 6, Chat.colorize("&aEditing " + arena.getArenaId() + "'s Loot Table"));
+    public void show(EditPlayer editPlayer) {
+        Gui gui = new Gui(LevelCTF.getInstance(), 6, Chat.colorize("&aEditing Floor Loot Table"));
         StaticPane staticPane = new StaticPane(0, 0, 9, 6);
         PaginatedPane paginatedPane = new PaginatedPane(0, 0, 9, 5);
         gui.setOnGlobalClick(click -> click.setCancelled(true));
 
         List<GuiItem> guiItemList = new ArrayList<>();
-        arena.getLootTable()
+        editPlayer.getFloorSelection().getLootTable()
                 .stream()
                 .filter(itemStackLoot -> itemStackLoot.getElement().getType() != Material.AIR)
                 .forEach(loot -> guiItemList.add(new LootEditItem(loot.getElement().clone(),
                         click -> {
                             click.setCancelled(true);
                             if (click.isLeftClick()) {
-                                new LootSettingsMenu().show(editPlayer, arena, loot);
+                                new LootSettingsMenu().show(editPlayer, loot);
                             } else if (click.isRightClick()) {
-                                arena.getLootTable().remove(loot);
+                                editPlayer.getFloorSelection().getLootTable().remove(loot);
                             }
                         })));
         paginatedPane.populateWithGuiItems(guiItemList);
@@ -44,6 +43,5 @@ public class LootTableEditMenu {
         gui.addPane(paginatedPane);
         gui.show(editPlayer.getPlayer());
     }
-
 
 }

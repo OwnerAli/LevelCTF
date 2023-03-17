@@ -12,7 +12,7 @@ public class SaveEditsItem extends ActionItem {
                         .setName("&a&lSave")
                         .addLoreLines("", "&7Click to save edits!")
                         .build(),
-                "saveEditsItem",
+                editPlayer.hashCode() + ":saveEditsItem",
                 event -> {
                     event.setCancelled(true);
                     editPlayer.disableEditMode();

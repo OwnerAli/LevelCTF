@@ -9,21 +9,21 @@ import java.util.Set;
 
 public class EditPlayerRegistry {
 
-    private final Set<EditPlayer> adminPlayerSet = new HashSet<>();
+    private final Set<EditPlayer> editPlayerSet = new HashSet<>();
 
     public void addEditPlayer(EditPlayer editPlayer) {
-        adminPlayerSet.add(editPlayer);
+        editPlayerSet.add(editPlayer);
     }
 
     public void removeEditPlayer(EditPlayer editPlayer) {
-        adminPlayerSet.remove(editPlayer);
+        editPlayerSet.remove(editPlayer);
+        System.out.println(editPlayerSet);
     }
 
     public Optional<EditPlayer> getEditPlayer(Player player) {
-        return adminPlayerSet.stream()
+        return editPlayerSet.stream()
                 .filter(adminPlayer -> adminPlayer.getPlayer().equals(player))
                 .findFirst();
     }
-
 
 }

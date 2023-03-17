@@ -48,6 +48,7 @@ public final class LevelCTF extends JavaPlugin {
         initializeRegistries();
         initializeCommands();
         initializeListeners();
+        saveDefaultConfig();
     }
 
     private void initializeRegistries() {

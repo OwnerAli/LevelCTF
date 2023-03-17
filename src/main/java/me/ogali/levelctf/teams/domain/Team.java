@@ -4,6 +4,7 @@ import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -22,12 +23,13 @@ public class Team {
         this.teamColor = teamColor;
     }
 
-    public void teleportTeamMembersToSpawn() {
+    public void teleportTeamMembersToSpawn(World newMapInstanceWorld) {
         teamMembersList.forEach(uuid -> {
             Player player = Bukkit.getPlayer(uuid);
             if (player == null) return;
-
-            player.teleport(spawnLocation);
+            Location clonedSpawnLocation = spawnLocation.clone();
+            clonedSpawnLocation.setWorld(newMapInstanceWorld);
+            player.teleport(clonedSpawnLocation);
         });
     }
 

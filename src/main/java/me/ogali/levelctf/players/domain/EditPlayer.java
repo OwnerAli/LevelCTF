@@ -45,7 +45,7 @@ public class EditPlayer {
     public void enableEditMode() {
         System.out.println(editingArena);
         giveItemLoadOut();
-        player.teleport(new Location(editingArena.getMapCreator().getWorld(), 0, 0, 0));
+        player.teleport(new Location(editingArena.getMapCreator().getEditWorld(), 0, 0, 0));
     }
 
     public void disableEditMode() {

@@ -22,12 +22,11 @@ public class Arena {
     private final int maxAmountOfPlayers;
     private List<Team> teamList;
     private List<Floor> floorList;
-    private final List<Loot<ItemStack>> lootTable;
 
     public Arena(String id, String mapSchematicName, int minAmountOfPlayers, int maxAmountOfPlayers, int numberOfTeams, int numberOfFloors) {
         this.id = id;
         this.mapCreator = new MapCreator(mapSchematicName);
-        mapCreator.createNewMapInstance();
+        mapCreator.createNewMapInstance(true);
         this.minAmountOfPlayers = minAmountOfPlayers;
         this.maxAmountOfPlayers = maxAmountOfPlayers;
         this.teamList = new ArrayList<>();
@@ -43,13 +42,12 @@ public class Arena {
         for (int i = 0; i < numberOfTeams; i++) {
             teamList.add(new Team(teamColorList[i]));
         }
-        this.lootTable = new ArrayList<>();
     }
 
     public void initializeGame(Player player, World newMapInstanceWorld) {
         floorList.forEach(floor -> floor.fillLootContainers(newMapInstanceWorld));
         teamList.get(0).getTeamMembersList().add(player.getUniqueId());
-        teamList.forEach(Team::teleportTeamMembersToSpawn);
+        teamList.forEach(team -> team.teleportTeamMembersToSpawn(newMapInstanceWorld));
     }
 
 }

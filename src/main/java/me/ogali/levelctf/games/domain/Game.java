@@ -17,7 +17,7 @@ public class Game implements Startable {
 
     @Override
     public void start(Player player) {
-        World newMapInstanceWorld = arena.getMapCreator().createNewMapInstance();
+        World newMapInstanceWorld = arena.getMapCreator().createNewMapInstance(false);
         arena.initializeGame(player, newMapInstanceWorld);
     }
 

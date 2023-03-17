@@ -25,17 +25,27 @@ import java.io.IOException;
 public class MapCreator {
 
     private final String schematicName;
-    @Getter
-    private org.bukkit.World world;
     private int numberOfInstances;
+
+    @Getter
+    private org.bukkit.World editWorld;
 
     public MapCreator(String schematicName) {
         this.schematicName = schematicName;
     }
 
-    public org.bukkit.World createNewMapInstance() {
-        org.bukkit.World world = new FlatWorldGenerator(schematicName + "World" + numberOfInstances++)
-                .createWorld();
+    public org.bukkit.World createNewMapInstance(boolean editMap) {
+        org.bukkit.World world;
+
+        if (editMap) {
+            world = new FlatWorldGenerator(schematicName + "EditMap").createWorld();
+            world.getBlockAt(0, 0, 0).setType(Material.BEDROCK);
+            this.editWorld = world;
+        } else {
+            world = new FlatWorldGenerator(schematicName + "World" + numberOfInstances++)
+                    .createWorld();
+        }
+
         if (world == null) throw new RuntimeException();
         pasteSchematic(world);
         return world;
@@ -46,8 +56,6 @@ public class MapCreator {
                 .getAbsolutePath() + "/map-schematics/" + schematicName + ".schem");
 
         WorldEditPlugin worldEditPlugin = (WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit");
-
-        world.getBlockAt(0, 0, 0).setType(Material.BEDROCK);
 
         assert worldEditPlugin != null;
 
@@ -75,9 +83,7 @@ public class MapCreator {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return;
         }
-        this.world = world;
     }
 
 }

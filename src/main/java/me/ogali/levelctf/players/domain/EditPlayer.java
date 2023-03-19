@@ -11,6 +11,7 @@ import me.ogali.levelctf.menus.LootSettingsMenu;
 import me.ogali.levelctf.prompts.domain.ChatPrompt;
 import me.ogali.levelctf.prompts.impl.LootWeightPrompt;
 import me.ogali.levelctf.teams.domain.Team;
+import me.ogali.levelctf.utils.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -43,7 +44,6 @@ public class EditPlayer {
     }
 
     public void enableEditMode() {
-        System.out.println(editingArena);
         giveItemLoadOut();
         player.teleport(new Location(editingArena.getMapCreator().getEditWorld(), 0, 0, 0));
     }
@@ -70,6 +70,10 @@ public class EditPlayer {
             }
         });
         chatPromptOptional = Optional.empty();
+    }
+
+    public void message(String message) {
+        Chat.tell(player, message);
     }
 
 }

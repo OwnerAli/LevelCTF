@@ -29,7 +29,7 @@ public class ItemRegistry {
                 .forEach(actionItem -> {
                     String[] splitItemId = actionItem.getId().split(":");
 
-                    if (Integer.parseInt(splitItemId[1]) != (editPlayerHashCode)) return;
+                    if (Integer.parseInt(splitItemId[0]) != (editPlayerHashCode)) return;
                     actionItemsSet.remove(actionItem);
                 });
     }

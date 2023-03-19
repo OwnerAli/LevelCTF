@@ -17,7 +17,6 @@ public class EditPlayerRegistry {
 
     public void removeEditPlayer(EditPlayer editPlayer) {
         editPlayerSet.remove(editPlayer);
-        System.out.println(editPlayerSet);
     }
 
     public Optional<EditPlayer> getEditPlayer(Player player) {

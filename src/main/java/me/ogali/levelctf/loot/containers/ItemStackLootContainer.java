@@ -14,7 +14,6 @@ public record ItemStackLootContainer(Container container) implements LootContain
             ItemStack randomItem = lootSelectorByWeight.getRandomItem();
             container.getInventory().setItem(randomSlot, randomItem);
             Chat.log("ITEM: " + randomItem);
-            Chat.log("FILLED: " + container.getLocation());
         }
     }
 

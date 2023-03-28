@@ -11,6 +11,7 @@ import me.ogali.levelctf.menus.LootSettingsMenu;
 import me.ogali.levelctf.prompts.domain.ChatPrompt;
 import me.ogali.levelctf.prompts.impl.LootWeightPrompt;
 import me.ogali.levelctf.teams.domain.Team;
+import me.ogali.levelctf.teams.impl.MultiPlayerTeam;
 import me.ogali.levelctf.utils.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -38,7 +39,7 @@ public class EditPlayer {
         this.player = player;
         this.editingArena = editingArena;
         this.originalInventoryContents = player.getInventory().getContents();
-        this.teamSelection = new Team(ChatColor.BLUE);
+        this.teamSelection = new MultiPlayerTeam(ChatColor.BLUE);
         chatPromptOptional = Optional.empty();
         enableEditMode();
     }

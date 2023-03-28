@@ -11,7 +11,7 @@ import me.ogali.levelctf.arenas.domain.Arena;
 import me.ogali.levelctf.floors.domain.Floor;
 import me.ogali.levelctf.games.domain.Game;
 import me.ogali.levelctf.players.domain.EditPlayer;
-import me.ogali.levelctf.teams.domain.Team;
+import me.ogali.levelctf.teams.impl.MultiPlayerTeam;
 import me.ogali.levelctf.utils.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -50,7 +50,7 @@ public class AdminCommands extends BaseCommand {
     public void onTeamCreate(CommandSender sender, String arenaId, String teamColor) {
         main.getArenaRegistry().getArenaById(arenaId)
                 .ifPresentOrElse(arena -> {
-                    arena.getTeamList().add(new Team(ChatColor.valueOf(teamColor)));
+                    arena.getTeamList().add(new MultiPlayerTeam(ChatColor.valueOf(teamColor)));
                     Chat.tell(sender, ChatColor.valueOf(teamColor) + teamColor.toUpperCase() + " TEAM CREATED!");
                 }, () -> Chat.tell(sender, "&cThere is no arena with id: " + arenaId));
     }
@@ -66,10 +66,14 @@ public class AdminCommands extends BaseCommand {
     }
 
     @Subcommand("game start")
-    @Syntax("<arena id>")
-    public void onGameStart(Player player, String arenaId) {
+    @Syntax("<arena id> <game id>")
+    public void onGameStart(Player player, String arenaId, String gameId) {
         main.getArenaRegistry().getArenaById(arenaId)
-                .ifPresentOrElse(arena -> new Game(arena, 3).start(player),
+                .ifPresentOrElse(arena -> {
+                            Game game = new Game(gameId, arena, 3);
+                            game.register();
+                            game.startGameCountdown();
+                        },
                         () -> Chat.tell(player, "&cThere is no arena with id: " + arenaId));
     }
 

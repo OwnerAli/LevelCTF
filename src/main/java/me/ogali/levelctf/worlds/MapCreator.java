@@ -38,11 +38,11 @@ public class MapCreator {
         org.bukkit.World world;
 
         if (editMap) {
-            world = new FlatWorldGenerator(schematicName + "EditMap").createWorld();
+            world = new VoidWorldGenerator(schematicName + "EditMap").createWorld();
             world.getBlockAt(0, 0, 0).setType(Material.BEDROCK);
             this.editWorld = world;
         } else {
-            world = new FlatWorldGenerator(schematicName + "World" + numberOfInstances++)
+            world = new VoidWorldGenerator(schematicName + "World" + numberOfInstances++)
                     .createWorld();
         }
 

@@ -1,4 +1,4 @@
-package me.ogali.levelctf.registries;
+package me.ogali.levelctf.players;
 
 import me.ogali.levelctf.players.domain.EditPlayer;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package me.ogali.levelctf.registries;
+package me.ogali.levelctf.arenas;
 
 import me.ogali.levelctf.arenas.domain.Arena;
 

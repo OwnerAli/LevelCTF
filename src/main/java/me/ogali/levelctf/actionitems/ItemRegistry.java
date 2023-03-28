@@ -1,4 +1,4 @@
-package me.ogali.levelctf.registries;
+package me.ogali.levelctf.actionitems;
 
 import de.tr7zw.nbtapi.NBT;
 import me.ogali.levelctf.actionitems.domain.ActionItem;

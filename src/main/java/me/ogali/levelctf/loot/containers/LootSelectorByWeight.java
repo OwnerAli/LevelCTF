@@ -2,7 +2,6 @@ package me.ogali.levelctf.loot.containers;
 
 import me.ogali.levelctf.LevelCTF;
 import me.ogali.levelctf.loot.domain.Loot;
-import me.ogali.levelctf.utils.Chat;
 
 import java.util.List;
 import java.util.Random;
@@ -27,9 +26,7 @@ public class LootSelectorByWeight<T> {
         for (Loot<T> item : items) {
             weightSoFar += item.getWeight();
             if (randomWeight < weightSoFar) {
-                T element = item.getElement();
-                Chat.log("ELEMENT: " + element);
-                return element;
+                return item.getElement();
             }
         }
         return null;

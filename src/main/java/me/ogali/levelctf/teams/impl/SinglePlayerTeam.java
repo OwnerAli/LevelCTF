@@ -17,4 +17,9 @@ public class SinglePlayerTeam extends Team {
         this.ctfPlayer = ctfPlayer;
     }
 
+    @Override
+    public void teleportMembersToSpawn() {
+        ctfPlayer.getPlayer().teleport(getSpawnLocation());
+    }
+
 }

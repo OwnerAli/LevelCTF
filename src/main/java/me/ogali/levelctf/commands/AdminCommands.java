@@ -20,6 +20,7 @@ import org.bukkit.entity.Player;
 @RequiredArgsConstructor
 @CommandAlias("lctfadmin|lctfa")
 @CommandPermission("levelctf.admin")
+@SuppressWarnings("unused")
 public class AdminCommands extends BaseCommand {
 
     private final LevelCTF main;

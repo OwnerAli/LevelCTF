@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 @RequiredArgsConstructor
 @CommandAlias("levelctf|lctf")
 @CommandPermission("levelctf.player")
+@SuppressWarnings("unused")
 public class PlayerCommands extends BaseCommand {
 
     private final LevelCTF main;

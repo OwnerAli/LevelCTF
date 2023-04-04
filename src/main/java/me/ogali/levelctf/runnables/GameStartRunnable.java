@@ -17,7 +17,7 @@ public class GameStartRunnable extends BukkitRunnable {
     }
 
     public void startCountdown() {
-        runTaskTimer(LevelCTF.getInstance(), 20, 20);
+        runTaskTimer(LevelCTF.getInstance(), 40, 20);
     }
 
     @Override

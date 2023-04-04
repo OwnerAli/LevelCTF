@@ -61,6 +61,7 @@ public class EditPlayer {
         inventory.setItem(1, new FloorSpawnPointItem(this).getNbtItem().getItem());
         inventory.setItem(2, new SetLootTableItem(this).getNbtItem().getItem());
         inventory.setItem(3, new ContainerAddItem(this).getNbtItem().getItem());
+        inventory.setItem(4, new FlagSpawnPointItem(this).getNbtItem().getItem());
         inventory.setItem(8, new SaveEditsItem(this).getNbtItem().getItem());
     }
 

@@ -65,6 +65,7 @@ public class Game implements Startable {
     @Override
     public void start(Player player) {
         assignPlayersRandomTeams();
+        arena.initializeGame();
         playerSet.forEach(ctfPlayer -> {
             ctfPlayer.setCurrentGame(this);
             ctfPlayer.teleportPlayerToTeamSpawn();

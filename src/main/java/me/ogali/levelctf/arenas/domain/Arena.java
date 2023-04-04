@@ -1,6 +1,7 @@
 package me.ogali.levelctf.arenas.domain;
 
 import lombok.Data;
+import me.ogali.levelctf.flags.domain.Flag;
 import me.ogali.levelctf.floors.domain.Floor;
 import me.ogali.levelctf.teams.domain.Team;
 import me.ogali.levelctf.teams.impl.MultiPlayerTeam;
@@ -19,6 +20,7 @@ public class Arena {
     private final MapCreator mapCreator;
     private final int minAmountOfPlayers;
     private final int maxAmountOfPlayers;
+    private final Flag flag;
     private List<Team> teamList;
     private List<Floor> floorList;
 
@@ -30,6 +32,7 @@ public class Arena {
         this.maxAmountOfPlayers = maxAmountOfPlayers;
         this.teamList = new ArrayList<>();
         this.floorList = new ArrayList<>();
+        this.flag = new Flag();
 
         for (int i = 0; i < numberOfFloors; i++) {
             floorList.add(new Floor());
@@ -50,26 +53,30 @@ public class Arena {
         this.maxAmountOfPlayers = arena.maxAmountOfPlayers;
         this.teamList = new ArrayList<>();
         this.floorList = new ArrayList<>();
+        this.flag = new Flag();
         arena.teamList
                 .forEach(team -> {
                     Team newTeam = new MultiPlayerTeam(team.getTeamColor());
-                    Location originalTeamSpawnLocationClone = team.getSpawnLocation().clone();
-                    originalTeamSpawnLocationClone.setWorld(newArenaWorld);
-                    newTeam.setSpawnLocation(originalTeamSpawnLocationClone);
+                    Location clonedOriginalTeamLocation = team.getSpawnLocation().clone();
+                    clonedOriginalTeamLocation.setWorld(newArenaWorld);
+                    newTeam.setSpawnLocation(clonedOriginalTeamLocation);
                     teamList.add(newTeam);
                 });
         arena.floorList
                 .forEach(floor -> {
                     Floor newFloor = new Floor();
-                    Location originalFloorSpawnLocationClone = floor.getSpawnLocation().clone();
-                    originalFloorSpawnLocationClone.setWorld(newArenaWorld);
-                    newFloor.setSpawnLocation(originalFloorSpawnLocationClone);
+                    Location clonedOriginalSpawnPointLocation = floor.getSpawnLocation().clone();
+                    clonedOriginalSpawnPointLocation.setWorld(newArenaWorld);
+                    newFloor.setSpawnLocation(clonedOriginalSpawnPointLocation);
                     floorList.add(newFloor);
                 });
+        Location clonedFlagLocation = arena.getFlag().getLocation().clone();
+        clonedFlagLocation.setWorld(newArenaWorld);
+        this.flag.setLocation(clonedFlagLocation);
     }
 
     public void initializeGame() {
-        teamList.forEach(Team::teleportMembersToSpawn);
+        flag.spawnFlag();
     }
 
 }

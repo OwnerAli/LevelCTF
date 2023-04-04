@@ -26,7 +26,7 @@ public class PlayerKillPlayerListener implements Listener {
                     game.getCtfPlayerByPlayer(killer)
                             .ifPresent(CTFPlayer::healAndTeleportToNextFloor);
                     game.getCtfPlayerByPlayer(victim)
-                            .ifPresent(CTFPlayer::teleportPlayerToPrevFloor);
+                            .ifPresent(CTFPlayer::teleportPlayerToPrevFloorAndDropFlag);
                 });
     }
 
